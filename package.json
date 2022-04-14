@@ -1,0 +1,24 @@
+{
+  "name": "properjs",
+  "version": "0.0.1",
+  "description": "MVC Framework for Typescript based Web Applications",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./lib/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Enkosz/ProperJS.git"
+  },
+  "author": "Simone Giannino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Enkosz/ProperJS/issues"
+  },
+  "homepage": "https://github.com/Enkosz/ProperJS#readme",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}
