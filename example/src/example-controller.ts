@@ -1,4 +1,4 @@
-import Controller from "../../src/decorators/controller";
+import Controller from "../../src/decorators/controller.decorator";
 import {Get} from "../../src/decorators/methods";
 
 @Controller()

@@ -1,7 +1,7 @@
 import InstanceWrapper from "./instance-wrapper";
 import { Component } from "../loader/component";
 
-export default class Container {
+export default class AnnotationApplicationContext {
     private readonly components: Map<Object, InstanceWrapper<Component>>
     private readonly controllers: Map<Object, InstanceWrapper<Component>>
 

@@ -1,4 +1,4 @@
-import Container from "./core/container/container";
+import AnnotationApplicationContext from "./core/container/annotation-application-context";
 import {Scanner} from "./core/scanner/scanner";
 import Injector from "./core/injector/injector";
 import RouteScanner from "./core/route/route-scanner";
@@ -13,7 +13,7 @@ export class ApplicationRunner {
 
     private static readonly app: ApplicationServerAdapter = new ExpressApplicationServer();
 
-    private static readonly container: Container = new Container();
+    private static readonly container: AnnotationApplicationContext = new AnnotationApplicationContext();
 
     private static readonly scanner: Scanner = new Scanner(this.container);
     private static readonly injector: Injector = new Injector(this.container);

@@ -1,16 +1,17 @@
 import {ComponentLoader} from "../loader/component-loader";
-import Container from "../container/container";
+import AnnotationApplicationContext from "../container/annotation-application-context";
 import Constants from "../../constants/constants";
 import Logger from "../../utils/logger";
+import {ComponentType} from "../../component-type";
 
 export class Scanner {
 
     private readonly logger = new Logger(this.constructor.name)
 
     private readonly loader: ComponentLoader
-    private readonly container: Container
+    private readonly container: AnnotationApplicationContext
 
-    constructor(container: Container) {
+    constructor(container: AnnotationApplicationContext) {
         this.loader = new ComponentLoader();
         this.container = container;
     }
@@ -20,9 +21,9 @@ export class Scanner {
         const components = await this.loader.loadComponents(applicationDirectory);
 
         components.map(({component, type}: any) => {
-            if(type === Constants.COMPONENT_TYPE_METADATA)
+            if(type === ComponentType.COMPONENT)
                 this.container.addComponent(component)
-            else if (type === Constants.CONTROLLER_TYPE_METADATA) {
+            else if (type === ComponentType.CONTROLLER) {
                 this.container.addController(component)
             }
         })

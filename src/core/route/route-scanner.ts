@@ -1,50 +1,36 @@
-import Container from "../container/container";
+import AnnotationApplicationContext from "../container/annotation-application-context";
 import {Reflector} from "../../utils/reflector";
 import Logger from "../../utils/logger";
 import {ExceptionHandler} from "../exception/exception-handler";
 import {ApplicationServerAdapter } from "../../application-server-adapter";
+import {RouteResolver} from "./route-resolver";
 
 export default class RouteScanner {
 
     private readonly logger = new Logger(this.constructor.name)
 
-    private readonly container: Container;
+    private readonly container: AnnotationApplicationContext;
+    private readonly routeResolver: RouteResolver
     private readonly exceptionHandler: ExceptionHandler;
     private readonly app: ApplicationServerAdapter
 
-    constructor(container: Container, app: ApplicationServerAdapter) {
+    constructor(container: AnnotationApplicationContext, app: ApplicationServerAdapter) {
         this.container = container;
         this.app = app;
         this.exceptionHandler = new ExceptionHandler();
+        this.routeResolver = new RouteResolver(this.app);
     }
 
     public scanRoutes() {
         this.logger.log("Scanning routes...")
 
-        const controllers = this.container.getControllers();
-
-        controllers.forEach((wrapper, _: any) => {
-            const instance: any = wrapper.instance;
-            const instancePrototype = Object.getPrototypeOf(instance)
-
-            const keys = Object.getOwnPropertyNames(instancePrototype)
-                .filter((method) => {
-                    const descriptor = Object.getOwnPropertyDescriptor(instancePrototype, method);
-                    if (!descriptor || descriptor.set || descriptor.get) {
-                        return false;
-                    }
-                    return method !== "constructor"
-                })
-
-            keys.forEach((key) => {
-                const {method, path} = Reflector.getMetadata(instance, key);
-                const handler = instancePrototype[key]
-
-                this.app.registerRoute({path, method, handler})
-                this.logger.log("Registered route:", instance.constructor.name , method, path)
+        this.container
+            .getControllers()
+            .forEach((wrapper, type: any) => {
+                this.logger.log("Registered", type.name)
+                this.routeResolver.resolveControllerRoutes(wrapper)
             })
 
-            this.app.registerExceptionHandler();
-        })
+        this.app.registerExceptionHandler();
     }
 }

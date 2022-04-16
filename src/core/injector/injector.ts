@@ -1,12 +1,12 @@
-import Container from "../container/container";
+import AnnotationApplicationContext from "../container/annotation-application-context";
 import Logger from "../../utils/logger";
 
 export default class Injector {
 
     private readonly logger: Logger = new Logger(this.constructor.name)
-    private readonly container: Container
+    private readonly container: AnnotationApplicationContext
 
-    constructor(container: Container) {
+    constructor(container: AnnotationApplicationContext) {
         this.container = container;
     }
 
