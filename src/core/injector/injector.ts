@@ -1,12 +1,14 @@
-import AnnotationApplicationContext from "../container/annotation-application-context";
-import Logger from "../../utils/logger";
+import WebApplicationContainer from "../container/web-application-container";
+import Logger from "../../utils/logger"
+import MetaType from "@common/type/meta-type";
+import {Provider} from "@common/type/provider";
 
 export default class Injector {
 
     private readonly logger: Logger = new Logger(this.constructor.name)
-    private readonly container: AnnotationApplicationContext
+    private readonly container: WebApplicationContainer
 
-    constructor(container: AnnotationApplicationContext) {
+    constructor(container: WebApplicationContainer) {
         this.container = container;
     }
 
@@ -17,66 +19,37 @@ export default class Injector {
 
     private injectComponents() {
         this.logger.log("Injecting components...")
-        const components = this.container.getComponents();
+        const providers = this.container.getProviders();
 
-        components.forEach((wrapper, component) => {
-            this.injectComponent(component, wrapper)
-        })
+        providers.forEach((metaType) => this.injectComponent(metaType))
     }
 
     private injectControllers() {
         this.logger.log("Injecting controllers...")
         const controllers = this.container.getControllers();
 
-        controllers.forEach((wrapper, controller) => {
-            this.injectController(controller, wrapper);
+        controllers.forEach((metaType) => this.injectComponent(metaType))
+    }
+
+    private injectComponent(metaType: MetaType<Provider>) {
+        if (metaType.instance != null)
+            return;
+
+        let args: any[] = [];
+        const dependencies = metaType.dependencies;
+
+        dependencies.forEach((dependency) => {
+            const dependencyMetaType = this.container.getProvider(dependency);
+
+            if (dependencyMetaType === undefined)
+                throw new Error(`Unregistered component type: ${dependencyMetaType}`);
+
+            if (dependencyMetaType.instance == null)
+                this.injectComponent(dependencyMetaType);
+
+            args.push(dependencyMetaType.instance);
         })
-    }
 
-    private injectController(controller: any, metaType: any) {
-        if(metaType.instance != null)
-            return;
-
-        let args: any[] = [];
-        let params: [] = Reflect.getMetadata("design:paramtypes", controller) || []
-
-        params.forEach(param => {
-            const componentType: any = this.container.getComponents().get(param)
-
-            if (componentType === undefined)
-                throw new Error(`Unregistered component type: ${param}`);
-
-            if (componentType.instance == null)
-                this.injectComponent(param, componentType);
-
-            args.push(componentType.instance);
-        });
-
-        metaType.instance = new controller(...args)
-        this.logger.log("Creating instance of controller: ", controller)
-    }
-
-    private injectComponent(component: any, wrapper: any) {
-        if (wrapper.instance != null)
-            return;
-
-        let args: any[] = [];
-        let params: [] = Reflect.getMetadata("design:paramtypes", component) || []
-
-        params.forEach(param => {
-            const componentType: any = this.container.getComponents().get(param)
-
-            if (componentType === undefined)
-                throw new Error(`Unregistered component type: ${param}`);
-
-            if (componentType.instance == null)
-                this.injectComponent(param, componentType);
-
-            args.push(componentType.instance);
-        });
-
-        wrapper.instance = new component(...args)
-        console.log("Creating instance of component type: ", component)
-
+        metaType.instance = new metaType.reference(...args)
     }
 }

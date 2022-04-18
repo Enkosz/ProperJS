@@ -1,7 +1,7 @@
 import {ApplicationServerAdapter, Route} from "./application-server-adapter";
 import express from "express";
 import {Express} from "express/ts4.0";
-import {ExceptionHandler} from "./core/exception/exception-handler";
+import {ExceptionHandler} from "../exception/exception-handler";
 
 export class ExpressApplicationServer implements ApplicationServerAdapter {
 

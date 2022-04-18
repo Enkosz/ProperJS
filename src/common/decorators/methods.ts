@@ -1,4 +1,4 @@
-import {HttpMethod} from "../application-server-adapter";
+import {HttpMethod} from "../../core/adapter/application-server-adapter";
 
 export const Get = (path: String = "/"): MethodDecorator => {
     return (target: Object, key, descriptor) => {

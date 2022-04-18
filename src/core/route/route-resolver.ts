@@ -1,6 +1,8 @@
 import {Reflector} from "../../utils/reflector";
-import {ApplicationServerAdapter} from "../../application-server-adapter";
+import {ApplicationServerAdapter} from "../adapter/application-server-adapter";
 import Logger from "../../utils/logger";
+import MetaType from "../../common/type/meta-type";
+import {Controller} from "../../common/type/controller";
 
 export class RouteResolver {
 
@@ -11,9 +13,8 @@ export class RouteResolver {
         this.app = app;
     }
 
-    public resolveControllerRoutes(controller: any) {
-        const instance: any = controller.instance;
-        const instancePrototype = Object.getPrototypeOf(instance)
+    public resolveControllerRoutes(metaType: MetaType<Controller>) {
+        const instancePrototype = Object.getPrototypeOf(metaType.instance)
 
         this.getControllerMethodHandlersFromPrototype(instancePrototype)
             .forEach(handler => this.registerRouteMethodHandlerFromPrototype(handler, instancePrototype))

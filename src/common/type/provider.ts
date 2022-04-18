@@ -1,3 +1,3 @@
-export interface Component {
+export interface Provider {
     new (...args: any): void
 }
