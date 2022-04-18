@@ -1,3 +1,3 @@
-export interface Provider {
-    new (...args: any): void
-}
+import {Type} from "@common/type/type";
+
+export interface Provider extends Type<Provider> {}

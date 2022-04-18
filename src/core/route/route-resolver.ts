@@ -1,8 +1,8 @@
-import {Reflector} from "../../utils/reflector";
+import {Reflector} from "@utils/reflector";
 import {ApplicationServerAdapter} from "../adapter/application-server-adapter";
-import Logger from "../../utils/logger";
-import MetaType from "../../common/type/meta-type";
-import {Controller} from "../../common/type/controller";
+import Logger from "@utils/logger";
+import MetaType from "@common/type/meta-type";
+import {Controller} from "@common/type/controller";
 
 export class RouteResolver {
 

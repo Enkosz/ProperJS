@@ -1,6 +1,7 @@
 import MetaType from "@common/type/meta-type";
 import {Reflector} from "@utils/reflector";
 import {ApplicationContainer} from "@core/container/application-container";
+import {Type} from "@common/type/type";
 
 export default class DependencyDiscover {
 
@@ -27,11 +28,16 @@ export default class DependencyDiscover {
 
 
     private exploreDependencyFromMetaType(metaType: MetaType<any>) {
-        let constructorParameters = Reflector.getMetadata<any>(metaType.reference, "design:paramtypes");
+        let constructorParameters = Reflector.getMetadata<Type[]>(metaType.reference, "design:paramtypes");
 
         constructorParameters
-            .forEach((parameter: any) => {
-                metaType.dependencies.add(parameter)
+            .forEach((parameter: Type) => {
+                const component = this.container.getProvider(parameter);
+
+                if(component == undefined)
+                    throw new Error("Unknown component type")
+
+                metaType.dependencies.add(component)
             })
     }
 }

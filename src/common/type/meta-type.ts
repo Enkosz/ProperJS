@@ -1,10 +1,11 @@
 import {Provider} from "./provider";
+import {Type} from "@common/type/type";
 
-export default class MetaType<T extends Provider> {
+export default class MetaType<T extends Type> {
 
     private _instance: T;
     private readonly _dependencies: Set<MetaType<Provider>>
-    private readonly _reference: any
+    private readonly _reference: Type<T>
 
     constructor(reference: any) {
         this._reference = reference;
@@ -16,7 +17,7 @@ export default class MetaType<T extends Provider> {
         return this._instance;
     }
 
-    get dependencies(): Set<MetaType<Provider>> {
+    get dependencies(): Set<MetaType<Type>> {
         return this._dependencies;
     }
 

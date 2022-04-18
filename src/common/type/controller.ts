@@ -1,3 +1,3 @@
-export interface Controller {
-    new (...args: any[]): void
-}
+import {Type} from "@common/type/type";
+
+export interface Controller extends Type<Controller> {}

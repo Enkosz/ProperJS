@@ -1,5 +1,5 @@
 import {Reflector} from "@utils/reflector";
-import {ComponentType} from "../type/component-type";
+import {ComponentType} from "@common/type/component-type";
 
 export const Controller = (path: string = "/"): ClassDecorator => {
     return (target: Object) => {

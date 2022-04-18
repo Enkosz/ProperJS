@@ -1,4 +1,4 @@
-import Logger from "../../utils/logger";
+import Logger from "@utils/logger";
 import {ExceptionHandler} from "../exception/exception-handler";
 import {ApplicationServerAdapter } from "../adapter/application-server-adapter";
 import {RouteResolver} from "./route-resolver";

@@ -2,17 +2,21 @@ import Logger from "@utils/logger"
 import MetaType from "@common/type/meta-type";
 import {Provider} from "@common/type/provider";
 import {ApplicationContainer} from "@core/container/application-container";
+import DependencyDiscover from "@core/discovery/dependency-discover";
 
 export default class Injector {
 
     private readonly logger: Logger = new Logger(this.constructor.name)
     private readonly container: ApplicationContainer
+    private readonly discover: DependencyDiscover;
 
     constructor(container: ApplicationContainer) {
         this.container = container;
+        this.discover = new DependencyDiscover(this.container);
     }
 
     public inject() {
+        this.discover.discoverDependencies();
         this.injectComponents();
         this.injectControllers();
     }
@@ -40,7 +44,7 @@ export default class Injector {
         const dependencies = metaType.dependencies;
 
         dependencies.forEach((dependency) => {
-            const dependencyMetaType = this.container.getProvider(dependency);
+            const dependencyMetaType = this.container.getProvider(dependency.reference);
 
             if (dependencyMetaType === undefined)
                 throw new Error(`Unregistered component type: ${dependencyMetaType}`);

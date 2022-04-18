@@ -14,6 +14,13 @@ export default class WebApplicationContext extends ProperApplicationContext {
         this.routeScanner = new RouteScanner(this.container, this.applicationServerAdapter)
     }
 
+    async init(): Promise<this> {
+        await super.init();
+        await this.routeScanner.scanRoutes();
+
+        return this;
+    }
+
     get applicationServerAdapter(): ApplicationServerAdapter {
         return this._applicationServerAdapter;
     }

@@ -3,7 +3,6 @@ import Injector from "@core/injector/injector";
 import {InstanceLoader} from "@core/loader/instance-loader";
 import ComponentScanner from "@core/scanner/component-scanner";
 import DirectoryComponentScanner from "@core/scanner/strategy/directory-component-scanner";
-import DependencyDiscover from "@core/discovery/dependency-discover";
 import {ApplicationContainer} from "@core/container/application-container";
 
 export default class ProperApplicationContext implements ApplicationContext {
@@ -12,15 +11,13 @@ export default class ProperApplicationContext implements ApplicationContext {
     protected readonly loader: InstanceLoader;
     protected readonly scanner: ComponentScanner
     protected readonly injector: Injector;
-    protected readonly discover: DependencyDiscover;
 
-    private initialized: Boolean
+    protected initialized: Boolean
 
     constructor() {
         this.container = new ApplicationContainer();
         this.scanner = new DirectoryComponentScanner();
         this.loader = new InstanceLoader(this.container, this.scanner);
-        this.discover = new DependencyDiscover(this.container);
         this.injector = new Injector(this.container);
 
         this.initialized = false;
@@ -43,7 +40,6 @@ export default class ProperApplicationContext implements ApplicationContext {
             return this;
 
         await this.loader.load();
-        await this.discover.discoverDependencies();
         await this.injector.inject();
 
         this.initialized = true;
