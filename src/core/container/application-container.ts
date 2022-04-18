@@ -1,15 +1,15 @@
-import { Provider } from "@common/type/provider";
-import hash from "object-hash";
 import MetaType from "@common/type/meta-type";
+import {Provider} from "@common/type/provider";
+import hashObject from "object-hash";
 import {Controller} from "@common/type/controller";
 
-export default class WebApplicationContainer {
-    private readonly controllers: Map<Object, MetaType<Controller>>
-    private readonly providers: Map<String, MetaType<Provider>>
+export class ApplicationContainer {
+    protected readonly providers: Map<String, MetaType<Provider>>
+    protected readonly controllers: Map<String, MetaType<Controller>>
 
     constructor() {
-        this.controllers = new Map<Object, MetaType<Controller>>();
         this.providers = new Map<String, MetaType<Provider>>();
+        this.controllers = new Map<String, MetaType<Controller>>();
     }
 
     public getProviders() {
@@ -17,7 +17,7 @@ export default class WebApplicationContainer {
     }
 
     public getProvider(provider: any) {
-        const hashed = hash(provider);
+        const hashed = this.hash(provider);
 
         return this.providers.get(hashed);
     }
@@ -27,7 +27,7 @@ export default class WebApplicationContainer {
     }
 
     public addProvider(provider: any) {
-        const hashed = hash(provider);
+        const hashed = this.hash(provider);
 
         if(!this.providers.has(hashed))
             this.providers.set(hashed, new MetaType<Provider>(provider))
@@ -38,10 +38,13 @@ export default class WebApplicationContainer {
     }
 
     public addController(controller: any) {
-        const hashed = hash(controller);
+        const hashed = this.hash(controller);
 
         if(!this.controllers.has(hashed))
-            this.controllers.set(controller, new MetaType<Controller>(controller))
+            this.controllers.set(hashed, new MetaType<Controller>(controller))
+    }
+
+    protected hash(provider: any) {
+        return hashObject(provider);
     }
 }
-

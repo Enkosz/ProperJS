@@ -1,8 +1,6 @@
-import {Provider} from "@common/type/provider";
-
 export default interface ApplicationContext {
 
-    get(token: String): Provider
+    get<T>(token: String | any): T
 
     init(): Promise<ApplicationContext>
 }

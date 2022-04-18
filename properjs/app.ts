@@ -1,9 +1,11 @@
-import {ApplicationFactory} from "../src";
+import ApplicationContextFactory from "@core/application-context-factory";
+import ComponentExample from "./src/component.example";
 
 async function bootstrap() {
-    const app = await ApplicationFactory.create();
+    const applicationContext = await ApplicationContextFactory.createApplicationContext();
 
-    app.listen(3000)
+    const provider = applicationContext.get<ComponentExample>(ComponentExample)
+    provider.doSomething();
 }
 
 bootstrap();

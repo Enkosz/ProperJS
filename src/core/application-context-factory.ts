@@ -1,16 +1,17 @@
 import ProperApplicationContext from "./context/proper-application-context";
-import ApplicationContext from "./context/application-context";
 import WebApplicationContext from "@core/context/web-application-context";
-import {ApplicationServerAdapter} from "@core/adapter/application-server-adapter";
-import {ExpressApplicationServer} from "@core/adapter/express-application-server";
 
 export default class ApplicationContextFactory {
 
-    static createApplicationContext(): ApplicationContext {
-        return new ProperApplicationContext();
+    static async createApplicationContext(): Promise<ProperApplicationContext> {
+        const applicationContext = new ProperApplicationContext();
+
+        return applicationContext.init();
     }
 
-    static createWebApplicationContext(): WebApplicationContext {
-        return new WebApplicationContext();
+    static async createWebApplicationContext(): Promise<WebApplicationContext> {
+        const applicationContext = new WebApplicationContext();
+
+        return applicationContext.init();
     }
 }

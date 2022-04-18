@@ -1,15 +1,14 @@
 import ApplicationContext from "./application-context";
-import {Provider} from "@common/type/provider";
-import WebApplicationContainer from "../container/web-application-container";
-import Injector from "../injector/injector";
-import {InstanceLoader} from "../loader/instance-loader";
+import Injector from "@core/injector/injector";
+import {InstanceLoader} from "@core/loader/instance-loader";
 import ComponentScanner from "@core/scanner/component-scanner";
 import DirectoryComponentScanner from "@core/scanner/strategy/directory-component-scanner";
 import DependencyDiscover from "@core/discovery/dependency-discover";
+import {ApplicationContainer} from "@core/container/application-container";
 
 export default class ProperApplicationContext implements ApplicationContext {
 
-    protected readonly container: WebApplicationContainer;
+    protected readonly container: ApplicationContainer;
     protected readonly loader: InstanceLoader;
     protected readonly scanner: ComponentScanner
     protected readonly injector: Injector;
@@ -18,7 +17,7 @@ export default class ProperApplicationContext implements ApplicationContext {
     private initialized: Boolean
 
     constructor() {
-        this.container = new WebApplicationContainer();
+        this.container = new ApplicationContainer();
         this.scanner = new DirectoryComponentScanner();
         this.loader = new InstanceLoader(this.container, this.scanner);
         this.discover = new DependencyDiscover(this.container);
@@ -27,9 +26,15 @@ export default class ProperApplicationContext implements ApplicationContext {
         this.initialized = false;
     }
 
-    get(token: String): Provider {
-        const metaType = this.container.getProviderByToken(token);
+    get<T>(token: String | any): T {
+        let metaType;
 
+        if(token instanceof String)
+            metaType = this.container.getProviderByToken(token);
+        else
+            metaType = this.container.getProvider(token)
+
+        // @ts-ignore
         return metaType ? metaType.instance : undefined!;
     }
 
@@ -37,7 +42,6 @@ export default class ProperApplicationContext implements ApplicationContext {
         if(this.initialized)
             return this;
 
-        await this.scanner.scanComponents();
         await this.loader.load();
         await this.discover.discoverDependencies();
         await this.injector.inject();

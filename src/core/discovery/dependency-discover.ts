@@ -1,29 +1,30 @@
-import WebApplicationContainer from "../container/web-application-container";
-import MetaType from "../../common/type/meta-type";
+import MetaType from "@common/type/meta-type";
 import {Reflector} from "@utils/reflector";
+import {ApplicationContainer} from "@core/container/application-container";
 
 export default class DependencyDiscover {
 
-    private readonly container: WebApplicationContainer
+    private readonly container: ApplicationContainer
 
-    constructor(container: WebApplicationContainer) {
+    constructor(container: ApplicationContainer) {
         this.container = container;
     }
 
     public discoverDependencies() {
         this.discoverProvidersDependencies();
-        this.discoverControllerDependencies();
-    }
-
-    private discoverControllerDependencies() {
-        this.container.getControllers()
-            .forEach(metaType => this.exploreDependencyFromMetaType(metaType))
+        this.discoverControllersDependencies();
     }
 
     private discoverProvidersDependencies() {
         this.container.getProviders()
             .forEach((metaType) => this.exploreDependencyFromMetaType(metaType))
     }
+
+    private discoverControllersDependencies() {
+        this.container.getControllers()
+            .forEach((metaType) => this.exploreDependencyFromMetaType(metaType))
+    }
+
 
     private exploreDependencyFromMetaType(metaType: MetaType<any>) {
         let constructorParameters = Reflector.getMetadata<any>(metaType.reference, "design:paramtypes");

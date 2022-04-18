@@ -1,16 +1,16 @@
-import WebApplicationContainer from "../container/web-application-container";
-import Logger from "../../utils/logger";
-import ComponentScanner from "../scanner/component-scanner";
-import {ComponentType} from "../../common/type/component-type";
+import Logger from "@utils/logger";
+import ComponentScanner from "@core/scanner/component-scanner";
+import {ComponentType} from "@common/type/component-type";
+import {ApplicationContainer} from "@core/container/application-container";
 
 export class InstanceLoader {
 
     private readonly logger = new Logger(this.constructor.name)
 
-    private readonly container: WebApplicationContainer
+    private readonly container: ApplicationContainer
     private readonly scanner: ComponentScanner
 
-    constructor(container: WebApplicationContainer, scanner: ComponentScanner) {
+    constructor(container: ApplicationContainer, scanner: ComponentScanner) {
         this.container = container;
         this.scanner = scanner;
     }

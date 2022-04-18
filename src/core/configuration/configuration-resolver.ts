@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import defaultConfig from '../../proper.default.config'
-import ProperApplicationConfig from "../../common/type/proper-application-config";
+import ProperApplicationConfig from "@common/type/proper-application-config";
 
 export default class ConfigurationResolver {
 
