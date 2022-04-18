@@ -4,7 +4,7 @@ export interface ApplicationServerAdapter {
 
     registerExceptionHandler(): void
 
-    listen(port: number, handler: any): void
+    listen(port: number): void
 }
 
 export interface Route {

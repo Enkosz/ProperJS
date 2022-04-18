@@ -1,1 +1,1 @@
-export * from './application-runner'
+export * from './application-factory'

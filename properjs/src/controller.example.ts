@@ -1,11 +1,13 @@
-import {Get} from "../../src/common/decorators/methods";
-import {Controller} from "../../src/common/decorators/controller.decorator";
+import {Get} from "@common/decorators/methods";
+import {Controller} from "@common/decorators/controller.decorator";
+import ComponentExample from "./component.example";
 
 @Controller()
 export default class ControllerExample {
 
-    constructor() {
-        console.log("Called controller")
+    constructor(private readonly component: ComponentExample) {
+        console.log("Called controller");
+        this.component.doSomething();
     }
 
     @Get()

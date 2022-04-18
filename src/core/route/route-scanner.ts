@@ -1,9 +1,8 @@
-import WebApplicationContainer from "../container/web-application-container";
-import {Reflector} from "../../utils/reflector";
 import Logger from "../../utils/logger";
 import {ExceptionHandler} from "../exception/exception-handler";
 import {ApplicationServerAdapter } from "../adapter/application-server-adapter";
 import {RouteResolver} from "./route-resolver";
+import WebApplicationContainer from "@core/container/web-application-container";
 
 export default class RouteScanner {
 

@@ -1,5 +1,6 @@
 import WebApplicationContainer from "../container/web-application-container";
 import MetaType from "../../common/type/meta-type";
+import {Reflector} from "@utils/reflector";
 
 export default class DependencyDiscover {
 
@@ -10,12 +11,22 @@ export default class DependencyDiscover {
     }
 
     public discoverDependencies() {
+        this.discoverProvidersDependencies();
+        this.discoverControllerDependencies();
+    }
+
+    private discoverControllerDependencies() {
+        this.container.getControllers()
+            .forEach(metaType => this.exploreDependencyFromMetaType(metaType))
+    }
+
+    private discoverProvidersDependencies() {
         this.container.getProviders()
-            .forEach((value => this.exploreDependencyFromMetaType(value)))
+            .forEach((metaType) => this.exploreDependencyFromMetaType(metaType))
     }
 
     private exploreDependencyFromMetaType(metaType: MetaType<any>) {
-        let constructorParameters = Reflect.getMetadata("design:paramtypes", metaType.reference);
+        let constructorParameters = Reflector.getMetadata<any>(metaType.reference, "design:paramtypes");
 
         constructorParameters
             .forEach((parameter: any) => {

@@ -1,7 +1,6 @@
 import WebApplicationContainer from "../container/web-application-container";
 import Logger from "../../utils/logger";
 import ComponentScanner from "../scanner/component-scanner";
-import DirectoryComponentScanner from "../scanner/strategy/directory-component-scanner";
 import {ComponentType} from "../../common/type/component-type";
 
 export class InstanceLoader {
@@ -11,9 +10,9 @@ export class InstanceLoader {
     private readonly container: WebApplicationContainer
     private readonly scanner: ComponentScanner
 
-    constructor(container: WebApplicationContainer) {
+    constructor(container: WebApplicationContainer, scanner: ComponentScanner) {
         this.container = container;
-        this.scanner = new DirectoryComponentScanner();
+        this.scanner = scanner;
     }
 
     public async load(): Promise<void> {

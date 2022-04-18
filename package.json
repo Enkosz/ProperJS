@@ -6,7 +6,7 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "dev:server": "nodemon --watch './**/*.ts' --exec 'ts-node' properjs/app.ts",
+    "dev:server": "nodemon --watch './**/*.ts' --exec 'ts-node -r tsconfig-paths/register' properjs/app.ts",
     "start": "node ./lib/src/index.js",
     "test": "jest"
   },
@@ -29,6 +29,7 @@
     "nodemon": "^2.0.15",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
+    "tsconfig-paths": "^3.14.1",
     "typescript": "^4.6.3"
   },
   "dependencies": {

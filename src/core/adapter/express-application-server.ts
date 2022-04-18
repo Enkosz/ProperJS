@@ -2,8 +2,11 @@ import {ApplicationServerAdapter, Route} from "./application-server-adapter";
 import express from "express";
 import {Express} from "express/ts4.0";
 import {ExceptionHandler} from "../exception/exception-handler";
+import Logger from "@utils/logger";
 
 export class ExpressApplicationServer implements ApplicationServerAdapter {
+
+    private readonly logger = new Logger(this.constructor.name);
 
     private readonly application: Express
     private readonly exceptionHandler: ExceptionHandler;
@@ -23,8 +26,10 @@ export class ExpressApplicationServer implements ApplicationServerAdapter {
         })
     }
 
-    public listen(port: number, handler: any) {
-        this.application.listen(port, handler)
+    public listen(port: number) {
+        this.application.listen(port, () => {
+            this.logger.log("ProperJS application running on port:", port)
+        })
     }
 
     public registerExceptionHandler() {

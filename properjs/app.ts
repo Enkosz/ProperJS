@@ -1,10 +1,9 @@
-import {ApplicationRunner} from "../src";
+import {ApplicationFactory} from "../src";
 
-export class App {
+async function bootstrap() {
+    const app = await ApplicationFactory.create();
 
-    public static async run() {
-        await ApplicationRunner.run();
-    }
+    app.listen(3000)
 }
 
-App.run();
+bootstrap();

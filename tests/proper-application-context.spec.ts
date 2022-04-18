@@ -1,4 +1,4 @@
-import ProperApplicationContext from "../src/core/container/proper-application-context";
+import ProperApplicationContext from "@core/context/proper-application-context";
 
 describe("ProperApplicationContext", () => {
 

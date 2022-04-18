@@ -1,11 +1,11 @@
 import ComponentScanner from "../component-scanner";
-import Component from "../../../common/type/component";
-import Logger from "../../../utils/logger";
+import Component from "@common/type/component";
+import Logger from "@utils/logger";
 import {promises as fs} from "fs";
 import {ComponentType} from "@common/type/component-type";
 import ConfigurationResolver from "../../configuration/configuration-resolver";
 import path from 'path'
-import {Reflector} from "../../../utils/reflector";
+import {Reflector} from "@utils/reflector";
 
 export default class DirectoryComponentScanner implements ComponentScanner {
 

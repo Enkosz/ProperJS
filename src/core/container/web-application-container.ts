@@ -1,7 +1,7 @@
-import { Provider } from "../../common/type/provider";
+import { Provider } from "@common/type/provider";
 import hash from "object-hash";
-import MetaType from "../../common/type/meta-type";
-import {Controller} from "../../common/type/controller";
+import MetaType from "@common/type/meta-type";
+import {Controller} from "@common/type/controller";
 
 export default class WebApplicationContainer {
     private readonly controllers: Map<Object, MetaType<Controller>>
