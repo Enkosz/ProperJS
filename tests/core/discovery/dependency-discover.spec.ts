@@ -5,8 +5,8 @@ import {Controller} from "@common/decorators/controller.decorator";
 
 describe("DependencyDiscover", () => {
 
-    const applicationContainer: ApplicationContainer = new ApplicationContainer();
-    const dependencyDiscover = new DependencyDiscover(applicationContainer);
+    let applicationContainer: ApplicationContainer
+    let dependencyDiscover: DependencyDiscover
 
     @Component()
     class DependencyExample {}
@@ -20,6 +20,11 @@ describe("DependencyDiscover", () => {
     class ControllerExample {
         constructor(private readonly _: DependencyExample) {}
     }
+
+    beforeEach(() => {
+        applicationContainer = new ApplicationContainer();
+        dependencyDiscover = new DependencyDiscover(applicationContainer);
+    })
 
     it('should throw an error when a constructor dependency provider is not registered in the container', function () {
         // given

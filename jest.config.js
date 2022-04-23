@@ -9,4 +9,7 @@ module.exports = {
         '^@common/(.*)$': '<rootDir>/src/common/$1',
         '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     },
+    setupFiles: [
+        '<rootDir>/tests/setup.ts'
+    ]
 };
