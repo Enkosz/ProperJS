@@ -26,9 +26,12 @@ export default class DependencyDiscover {
             .forEach((metaType) => this.exploreDependencyFromMetaType(metaType))
     }
 
-
     private exploreDependencyFromMetaType(metaType: MetaType<any>) {
         let constructorParameters = Reflector.getMetadata<Type[]>(metaType.reference, "design:paramtypes");
+
+        // We could have default constructor with no parameters
+        if(!constructorParameters)
+            return;
 
         constructorParameters
             .forEach((parameter: Type) => {

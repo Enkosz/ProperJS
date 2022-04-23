@@ -37,6 +37,12 @@ export class ApplicationContainer {
         return this.controllers;
     }
 
+    public getController(controller: any) {
+        const hashed = this.hash(controller);
+
+        return this.controllers.get(hashed);
+    }
+
     public addController(controller: any) {
         const hashed = this.hash(controller);
 
