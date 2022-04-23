@@ -1,10 +1,10 @@
-import {Component} from "@common/decorators/component.decorator";
+    import {Component} from "@common/decorators/component.decorator";
 
-@Component()
-export default class DependencyExample {
-    constructor() {}
+    @Component()
+    export default class DependencyExample {
+        constructor() {}
 
-    public doSomething() {
-        console.log("Called from dependency")
+        public doSomething() {
+            console.log("Called from dependency")
+        }
     }
-}

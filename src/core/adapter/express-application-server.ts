@@ -1,6 +1,5 @@
 import {ApplicationServerAdapter, Route} from "./application-server-adapter";
-import express from "express";
-import {Express} from "express/ts4.0";
+import express, {Express} from "express";
 import {ExceptionHandler} from "../exception/exception-handler";
 import Logger from "@utils/logger";
 

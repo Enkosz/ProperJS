@@ -15,7 +15,7 @@ export default class ConfigurationResolver {
         const hasCustomConfig = ConfigurationResolver.containsCustomConfigurations(processPath)
 
         if (hasCustomConfig)
-            this.configurations = require(path.join(processPath, "proper.config.ts"))
+            this.configurations = require(path.join(processPath, "proper.config.ts")).default
         else
             this.configurations = defaultConfig;
 

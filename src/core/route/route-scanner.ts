@@ -3,8 +3,6 @@ import {ExceptionHandler} from "../exception/exception-handler";
 import {ApplicationServerAdapter } from "../adapter/application-server-adapter";
 import {RouteResolver} from "./route-resolver";
 import {ApplicationContainer} from "@core/container/application-container";
-import MetaType from "@common/type/meta-type";
-import {Controller} from "@common/type/controller";
 
 export default class RouteScanner {
 
@@ -27,7 +25,7 @@ export default class RouteScanner {
 
         this.container
             .getControllers()
-            .forEach((metaType: MetaType<Controller>) => {
+            .forEach((metaType) => {
                 this.logger.log("Registered", metaType.reference)
                 this.routeResolver.resolveControllerRoutes(metaType)
             })
