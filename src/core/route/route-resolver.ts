@@ -18,13 +18,16 @@ export class RouteResolver {
         const instancePrototype = Object.getPrototypeOf(metaType.instance)
 
         MetadataExtractor.extractMetadataFromPrototype(instancePrototype)
-            .forEach(handler => this.registerRouteMethodHandlerFromPrototype(handler, instancePrototype))
+            .forEach(handler => {
+                this.registerRouteMethodHandlerFromPrototype(handler, instancePrototype, metaType.instance)
+            })
     }
 
-    private registerRouteMethodHandlerFromPrototype(handler: any, instance: any) {
-        const {method, path} = Reflector.getMetadata(instance, handler.name);
+    private registerRouteMethodHandlerFromPrototype(handler: any, instancePrototype: any, instance: any) {
+        const {method, path} = Reflector.getMetadata(instancePrototype, handler.name);
+        const boundHandler = handler.bind(instance)
 
-        this.app.registerRoute({path, method, handler})
+        this.app.registerRoute({path, method, handler: boundHandler})
         this.logger.log(method, path)
     }
 }

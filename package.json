@@ -2,12 +2,11 @@
   "name": "properjs",
   "version": "0.0.1",
   "description": "MVC Framework for Typescript based Web Applications",
-  "main": "./lib/src/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "dev:server": "nodemon --watch './**/*.ts' --exec 'ts-node -r tsconfig-paths/register' properjs/app.ts",
-    "start": "node ./lib/src/index.js",
+    "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json",
+    "dev:server": "nodemon --watch './**/*.ts' --exec 'ts-node -r tsconfig-paths/register' examples/hello-word-example/app.ts",
+    "start": "node examples/hello-word-example/node_modules/properjs/lib/src/index.js",
     "test": "jest --silent"
   },
   "repository": {
@@ -18,10 +17,6 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Enkosz/ProperJS/issues"
-  },
-  "_moduleAliases": {
-    "@core": "dist/rest/modules",
-    "@services": "dist/services"
   },
   "homepage": "https://github.com/Enkosz/ProperJS#readme",
   "devDependencies": {
@@ -34,6 +29,7 @@
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^3.14.1",
+    "tspath": "^1.3.7",
     "typescript": "^4.6.3"
   },
   "dependencies": {
@@ -41,6 +37,8 @@
     "module-alias": "^2.2.2",
     "object-hash": "^3.0.0",
     "reflect-metadata": "^0.1.13",
+    "tsconfig-replace-paths": "^0.0.11",
+    "tscpaths": "^0.0.9",
     "tslog": "^3.3.3"
   }
 }

@@ -1,4 +1,4 @@
-import {ApplicationFactory} from "@core/application-factory";
+import {ApplicationFactory} from "properjs/src/core";
 
 async function bootstrap() {
     const applicationServerAdapter = await ApplicationFactory.create();

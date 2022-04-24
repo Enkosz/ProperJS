@@ -1,0 +1,20 @@
+{
+  "name": "hello-word-example",
+  "version": "1.0.0",
+  "description": "Example ProperJS Hello World Web Application",
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon --watch './**/*.ts' --exec 'ts-node -r tsconfig-paths/register' app.ts"
+  },
+  "author": "Simone Giannino",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.7.0",
+    "tspath": "^1.3.7",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "properjs": "file:../../dist"
+  }
+}
